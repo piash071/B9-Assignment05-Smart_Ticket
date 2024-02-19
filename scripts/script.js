@@ -1,12 +1,11 @@
 
 
-
+const seats = document.querySelectorAll(".seat");
 const couponName = document.getElementById("couponName");
-const couponApplybtn = document.getElementById("couponApplybtn");
-const couponHidden = document.getElementById("couponHidden");
+const couponApply = document.getElementById("couponApply");
+const couponHide = document.getElementById("couponHide");
 const discountAmountShow = document.getElementById("discountAmountShow");
 const grandTotal = document.getElementById("grandTotal");
-const seats = document.querySelectorAll(".seat");
 const totalSeatValue = document.getElementById("totalSeatValue");
 const updateSeats = document.getElementById("updateSeats");
 const totalAmount = document.getElementById("totalAmount");
@@ -17,6 +16,9 @@ const defaultValue = document.getElementById("defaultValue");
 const submit = document.getElementById("submit");
 const successShow = document.getElementById("successShow");
 const hideElement = document.getElementById("hideElement");
+const footerId = document.getElementById("footerId");
+
+
 
 let seatLimit = 0;
 let calculateSeatOrder = 1;
@@ -26,14 +28,16 @@ phoneNumber.addEventListener("change", function() {
     submit.removeAttribute("disabled");
   }
 });
-// function area
+
+
+
 const validNumber = function(sub) {
   phoneNumber.addEventListener("input", function() {
     let isValue;
-    const contostr = phoneNumber.value.toString();
+    const phnNumStr = phoneNumber.value.toString();
     if (arrs.length === 0) {
       isValue = false;
-    } else if (contostr.length === 11) {
+    } else if (phnNumStr.length === 11) {
       isValue = true;
     } else {
       isValue = false;
@@ -45,6 +49,8 @@ const validNumber = function(sub) {
     }
   });
 };
+
+
 
 const couponCalculation = function(amountNum) {
   show.classList.remove("hidden");
@@ -60,14 +66,16 @@ const couponCalculation = function(amountNum) {
     return "Invalid Coupon Code";
   }
 };
+
+
 const calculateTotalAmount = function() {
   let amount = arrs.length * 550;
   totalAmount.innerText = amount;
   grandTotal.innerText = amount;
   if (amount > 1650) {
     couponName.removeAttribute("disabled");
-    couponApplybtn.removeAttribute("disabled");
-    couponApplybtn.addEventListener("click", function() {
+    couponApply.removeAttribute("disabled");
+    couponApply.addEventListener("click", function() {
       const discountValue = couponCalculation(amount);
       discountAmountShow.innerText = discountValue;
       grandTotal.innerText = amount - discountValue;
@@ -75,11 +83,13 @@ const calculateTotalAmount = function() {
         grandTotal.innerText = amount;
         alert("Invalid Code");
       }
-      couponHidden.classList.add("hidden");
+      couponHide.classList.add("hidden");
     });
   }
   validNumber(submit);
 };
+
+
 const seatUpdate = function() {
   if (seatLimit > 3) {
     return;
@@ -96,10 +106,12 @@ const seatUpdate = function() {
   }
 };
 
+
 const displayLength = function() {
   totalSeatValue.innerText = arrs.length;
   seatUpdate();
 };
+
 
 for (const seat of seats) {
   seat.addEventListener("click", function(e) {
@@ -125,7 +137,10 @@ for (const seat of seats) {
     displayLength();
   });
 }
+
+
 submit.addEventListener("click", function() {
   hideElement.classList.add("hidden");
   successShow.classList.remove("hidden");
+  footerId.classList.add("hidden");
 });
